@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicionário</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="home" class="flex flex-col min-w-screen min-h-screen items-center justify-center">
+        <h2 class="text-8xl font-bold">Dicionário</h2>
+        <h2 class="text-4xl font-bold">Encontre palavras</h2>
+        <h3 class="text-xl">insira abaixo</h3>
+        <input id="homeInput" type="text" class="w-full mt-10 bg-gray-200 h-20 px-10 text-2xl" placeholder="Digite aqui a palavra desejada">
+        <button onclick="buscaButton()" class="w-full bg-black h-20 text-white text-2xl">Buscar</button>
+    </div>
+    <div class="flex md:justify-center w-full min-h-screen hidden" id="dicionario">
+        <div class="md:w-1/2 px-4 min-w-full">
+            <div class="flex topbar h-20 w-full justify-between">
+                <img src="assets/logo.png" alt="">
+                <div class="theme"></div>
+                <div class="h-full flex items-center justify-center flex-col">
+                    <label for="theme" class="flex items-center justify-center cursor-pointer relative">
+                        <input type="checkbox" id="theme" class="sr-only">
+                        <div class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"></div>
+                        <img class="w-6 ml-4" src="assets/theme.png" alt="">
+                    </label>
+                </div>
+            </div>
+            <div class="search my-6">
+                <input id="search" type="text" placeholder="Digite aqui a palavra"
+                    class="px-10 w-full border-2 h-16 rounded-2xl bg-gray-200 text-black text-xl">
+            </div>
+            <div class="title">
+                <h1 id="word" class="text-8xl font-bold">Pa la vra</h1>
+            </div>
+            <div class="meaning mt-8 flex items-center">
+                <h2 class="font-bold text-xl">Significado</h2>
+                <hr class="w-full ml-4 border-black mt-2 border-2">
+            </div>
+            <div id="resposta" class="flex flex-col"></div>
+            <div class="frases mt-8 flex items-center">
+                <h2 class="font-bold text-xl">Frases</h2>
+                <hr class="w-full ml-4 border-black mt-2 border-2">
+            </div>
+            <div id="frases" class="flex flex-col"></div>
+            <div class="sinonimos mt-8 flex items-center">
+                <h2 class="font-bold text-xl">Sinônimos</h2>
+                <hr class="w-full ml-4 border-black mt-2 border-2">
+            </div>
+            <div id="sinonimos" class="flex flex-col"></div>
+        </div>
+    </div>
+    <div id="error" class="flex flex-col min-w-screen min-h-screen items-center justify-center hidden">
+        <img src="assets/error.gif" alt="" class="w-64 h-64">
+        <h2 class="text-8xl font-bold">404</h2>
+        <h2 class="text-4xl font-bold">Não encontramos esta palavra!</h2>
+        <h3 class="text-xl">tente novamente abaixo</h3>
+        <input id="errorInput" type="text" class="w-full mt-10 bg-gray-200 h-20 px-10 text-2xl" placeholder="Digite aqui a palavra desejada">
+        <button onclick="buscaButton()" class="w-full bg-black h-20 text-white text-2xl">Buscar</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
