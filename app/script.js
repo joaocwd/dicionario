@@ -6,7 +6,7 @@ home.style.display = 'flex';
 
 // Função para buscar uma palavra
 function buscaPalavra(palavra) {
-    fetch(`http://localhost:3000/${palavra}`)
+    fetch(`https://dicionario-production.up.railway.app/${palavra}`)
         .then(response => response.text())
         .then(data => {
             data = JSON.parse(data);
