@@ -7,7 +7,11 @@ import cors from 'cors';
 dotenv.config();
 
 const app: Express = express();
-app.use(cors())
+const corsOptions = {
+    origin: 'https://dicionario-production-b64e.up.railway.app',
+    optionsSuccessStatus: 200
+  };
+app.use(cors(corsOptions))
 const port = process.env.PORT;
 
 // Rota para buscar palavra
