@@ -2,17 +2,23 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import axios from 'axios';
 import { load } from 'cheerio';
+import cors from 'cors';
 
 dotenv.config();
 
 const app: Express = express();
+app.use(cors())
 const port = process.env.PORT;
 
 // Rota para buscar palavra
 app.get('/:word', async (req: Request, res: Response) => {
-    const word = req.params.word;
-    const resposta = await extrairConteudoPagina(word)
-    res.send(resposta)
+    try {
+        const word = req.params.word;
+        const resposta = await extrairConteudoPagina(word)
+        res.send(resposta)
+    } catch (error) {
+        res.status(404).send({error: 'not found'})
+    }
 });
 
 app.listen(port, () => {
@@ -22,7 +28,7 @@ app.listen(port, () => {
 // Função que extrai o conteudo de dicio.com.br
 async function extrairConteudoPagina(word: string): Promise<any> {
     try {
-        const url = `https://www.dicio.com.br/${word}/`;
+        const url = `https://www.dicio.com.br/${removerAcentos(word)}/`;
         const response = await axios.get(url);
         const html = response.data;
         const $ = load(html);
@@ -69,4 +75,8 @@ async function extrairConteudoPagina(word: string): Promise<any> {
         console.error('Ocorreu um erro na requisição:', error);
         throw error;
     }
+}
+
+function removerAcentos(palavra: string) {
+    return palavra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }

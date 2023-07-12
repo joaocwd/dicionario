@@ -16,14 +16,21 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const axios_1 = __importDefault(require("axios"));
 const cheerio_1 = require("cheerio");
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 const port = process.env.PORT;
 // Rota para buscar palavra
 app.get('/:word', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const word = req.params.word;
-    const resposta = yield extrairConteudoPagina(word);
-    res.send(resposta);
+    try {
+        const word = req.params.word;
+        const resposta = yield extrairConteudoPagina(word);
+        res.send(resposta);
+    }
+    catch (error) {
+        res.status(404).send({ error: 'not found' });
+    }
 }));
 app.listen(port, () => {
     console.log(`⚡️ Servidor rodando em http://localhost:${port}`);
@@ -32,7 +39,7 @@ app.listen(port, () => {
 function extrairConteudoPagina(word) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const url = `https://www.dicio.com.br/${word}/`;
+            const url = `https://www.dicio.com.br/${removerAcentos(word)}/`;
             const response = yield axios_1.default.get(url);
             const html = response.data;
             const $ = (0, cheerio_1.load)(html);
@@ -77,4 +84,7 @@ function extrairConteudoPagina(word) {
             throw error;
         }
     });
+}
+function removerAcentos(palavra) {
+    return palavra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
